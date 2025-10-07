@@ -3,11 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Lago de Datos · Esquema Estrella · FCT_Interacciones (v1.2)</title>
+  <title>Lago de Datos · Esquema Estrella · FCT_Interacciones (v1.2 + fallbacks)</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet"/>
   <style>
     :root{
-      --green-800:#006B3F; --green-600:#1CA05A; --green-400:#7AC143; --gray-100:#e7ebe9; --muted:#5f6b64; --surface:#f8faf9; --shadow:0 10px 30px rgba(0,0,0,.08);
+      --green-800:#006B3F; --green-600:#1CA05A; --green-400:#7AC143;
+      --gray-100:#e7ebe9; --muted:#5f6b64; --surface:#f8faf9;
+      --shadow:0 10px 30px rgba(0,0,0,.08);
     }
     body{margin:0;font-family:Montserrat, Nunito, sans-serif;color:#18231e;background:#fff;}
     header{position:sticky;top:0;background:linear-gradient(90deg,var(--green-800),var(--green-600));color:#fff;box-shadow:var(--shadow)}
@@ -16,11 +18,13 @@
     .logo{width:36px;height:36px;border-radius:10px;background:conic-gradient(from 210deg,var(--green-400),var(--green-600));display:grid;place-items:center;color:#fff}
     .navlinks{margin-left:auto;display:flex;gap:12px;flex-wrap:wrap}
     .navlinks a{color:#e8f7ef;text-decoration:none}
+
     main{max-width:1160px;margin:0 auto;padding:40px 20px 80px}
     h1{font-size:clamp(26px,4vw,40px);background:linear-gradient(90deg,var(--green-800),var(--green-600),var(--green-400));-webkit-background-clip:text;color:transparent}
     h2{font-size:clamp(20px,3vw,28px);margin:0 0 12px;background:linear-gradient(90deg,var(--green-800),var(--green-600));-webkit-background-clip:text;color:transparent}
     .card{background:var(--surface);border:1px solid var(--gray-100);box-shadow:var(--shadow);border-radius:16px;padding:24px;margin-bottom:28px}
     .diagram{background:linear-gradient(180deg,#ffffff,#f5fbf7 60%);border:1px solid var(--gray-100);border-radius:18px;box-shadow:var(--shadow);padding:12px}
+
     .gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
     @media(max-width:1000px){.gallery{grid-template-columns:repeat(2,minmax(0,1fr))}}
     @media(max-width:640px){.gallery{grid-template-columns:1fr}}
@@ -29,6 +33,7 @@
     .tile img{max-width:100%;max-height:100%;object-fit:contain}
     .tile .body{padding:14px}
     .small{font-size:13px;color:var(--muted)}
+
     table{width:100%;border-collapse:collapse;border:1px solid var(--gray-100)}
     th,td{padding:10px 14px;border-bottom:1px solid var(--gray-100);font-size:14px;text-align:left}
     th{background:#f6fbf7}
@@ -46,10 +51,14 @@
       </div>
     </nav>
   </header>
+
   <main>
+    <!-- ===================== Visión ===================== -->
     <section id="vision" class="card">
       <h1>Esquema Estrella de FCT_Interacciones</h1>
       <p>Un <b>esquema estrella</b> organiza los datos con una <b>tabla de hechos</b> en el centro (que captura eventos cuantificables) y <b>dimensiones</b> alrededor que proveen contexto. En FCT_Interacciones, el hecho representa cada contacto o interacción con el cliente y las dimensiones nos permiten analizar esos eventos por cliente, producto, fecha, moneda, tipo y estado. Esta estructura simplifica consultas analíticas y mantiene consistencia en las métricas.</p>
+
+      <!-- Diagrama de vista previa con dimensiones del mapeo -->
       <div class="diagram">
         <svg viewBox="0 0 860 560" role="img" aria-label="Diagrama de esquema estrella">
           <defs>
@@ -59,9 +68,12 @@
               <stop offset="100%" stop-color="var(--green-400)"/>
             </linearGradient>
           </defs>
+          <!-- Hecho -->
           <rect x="330" y="210" rx="16" ry="16" width="200" height="140" fill="url(#g1)"/>
           <text x="430" y="260" text-anchor="middle" font-size="18" fill="#fff" font-weight="700">FCT_Interacciones</text>
           <text x="430" y="285" text-anchor="middle" font-size="12" fill="#e7ffe7">Grano: 1 fila = 1 interacción</text>
+
+          <!-- Conexiones -->
           <g stroke="#1CA05A" stroke-width="2" opacity="0.9">
             <line x1="330" y1="235" x2="185" y2="140" />
             <line x1="330" y1="260" x2="170" y2="245" />
@@ -71,21 +83,30 @@
             <line x1="530" y1="275" x2="690" y2="280" />
             <line x1="530" y1="335" x2="675" y2="420" />
           </g>
+
+          <!-- Dimensiones (izquierda) -->
           <g>
             <rect x="90" y="110" rx="12" ry="12" width="190" height="56" fill="#fff" stroke="#d9e8df"/>
             <text x="185" y="143" text-anchor="middle" font-size="13" fill="#205a3f">DIM01_DimCliente</text>
+
             <rect x="70" y="220" rx="12" ry="12" width="200" height="56" fill="#fff" stroke="#d9e8df"/>
             <text x="170" y="253" text-anchor="middle" font-size="13" fill="#205a3f">DIM02_DimProducto</text>
+
             <rect x="70" y="310" rx="12" ry="12" width="200" height="56" fill="#fff" stroke="#d9e8df"/>
             <text x="170" y="343" text-anchor="middle" font-size="13" fill="#205a3f">DIM06_DimMoneda</text>
+
             <rect x="90" y="400" rx="12" ry="12" width="190" height="56" fill="#fff" stroke="#d9e8df"/>
             <text x="185" y="433" text-anchor="middle" font-size="13" fill="#205a3f">DIM07_DimCalendario</text>
           </g>
+
+          <!-- Dimensiones (derecha) -->
           <g>
             <rect x="590" y="110" rx="12" ry="12" width="200" height="56" fill="#fff" stroke="#d9e8df"/>
             <text x="690" y="143" text-anchor="middle" font-size="13" fill="#205a3f">DIM11_DimTipoInteraccion</text>
+
             <rect x="610" y="250" rx="12" ry="12" width="180" height="56" fill="#fff" stroke="#d9e8df"/>
             <text x="700" y="283" text-anchor="middle" font-size="13" fill="#205a3f">DIM03_DimEstado Producto</text>
+
             <rect x="590" y="400" rx="12" ry="12" width="200" height="56" fill="#fff" stroke="#d9e8df"/>
             <text x="690" y="433" text-anchor="middle" font-size="13" fill="#205a3f">DIM05_DimTipoProducto</text>
           </g>
@@ -93,47 +114,51 @@
       </div>
     </section>
 
+    <!-- ===================== Hecho ===================== -->
     <section id="hecho" class="card">
-  <h2>Grano y Tabla de Hechos: FCT_Interacciones</h2>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
-    <div>
-      <h3>Grano</h3>
-      <p>Una fila representa <b>una interacción única</b> (contacto/caso) registrada en los orígenes (CRM, telefonía, chat, web, etc.).</p>
-      <ul>
-        <li>Identificador de negocio: <code>COD_INTERACCION</code>.</li>
-        <li>Derivación temporal a <code>DIM07_DimCalendario</code> a partir de <code>FEC_INTERACCION</code>.</li>
-        <li>Monetización opcional por <code>MONTO_INTERACCION</code> (si aplica).</li>
-      </ul>
-      <div class="diagram" id="fact-image" style="margin-top:10px; text-align:center">
-        <img src="img/fact/interacciones.png" alt="Diagrama FCT_Interacciones" style="max-width:100%; border-radius:12px; display:none" onload="this.style.display='block'"/>
-        <div class="small" id="fact-fallback" style="padding:8px">Coloca la imagen en <code>img/fact/interacciones.png</code>. Si no existe, se muestra esta nota.</div>
+      <h2>Grano y Tabla de Hechos: FCT_Interacciones</h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
+        <div>
+          <h3>Grano</h3>
+          <p>Una fila representa <b>una interacción única</b> (contacto/caso) registrada en los orígenes (CRM, telefonía, chat, web, etc.).</p>
+          <ul>
+            <li>Identificador de negocio: <code>COD_INTERACCION</code>.</li>
+            <li>Derivación temporal a <code>DIM07_DimCalendario</code> a partir de <code>FEC_INTERACCION</code>.</li>
+            <li>Monetización opcional por <code>MONTO_INTERACCION</code> (si aplica).</li>
+          </ul>
+          <div class="diagram" id="fact-image" style="margin-top:10px; text-align:center">
+            <!-- La imagen del hecho se inyecta con fallback de extensiones -->
+            <div id="fact-img-mount" aria-label="Imagen del hecho"></div>
+            <div class="small" id="fact-fallback" style="padding:8px">No se encontró imagen del hecho. Sube <code>/img/fact/interacciones.(png|PNG|jpg|JPG|jpeg)</code>.</div>
+          </div>
+        </div>
+        <div>
+          <h3>Campos del Hecho</h3>
+          <table>
+            <thead><tr><th>Campo</th><th>Descripción</th></tr></thead>
+            <tbody>
+              <tr><td>FEC_INTERACCION</td><td>Fecha/hora de la interacción</td></tr>
+              <tr><td>COD_CLIENTE</td><td>ID del cliente en el Banco</td></tr>
+              <tr><td>COD_PRODUCTO</td><td>Con el Producto que interactuo</td></tr>
+              <tr><td>COD_MONEDA</td><td>Moneda de la interacción</td></tr>
+              <tr><td>COD_INTERACCION</td><td>Identificador de la interacción</td></tr>
+              <tr><td>COD_TIPO_INTERACCION</td><td>Identificador del tipo de interacción</td></tr>
+              <tr><td>COD_ESTADO_INTERACCION</td><td>Identificador del estado de la interacción</td></tr>
+              <tr><td>COD_INFO_INTERACCION</td><td>Detalle</td></tr>
+              <tr><td>MONTO_INTERACCION</td><td>Monto de la interacción</td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
-    <div>
-      <h3>Campos del Hecho</h3>
-      <table>
-        <thead><tr><th>Campo</th><th>Descripción</th></tr></thead>
-        <tbody>
-          <tr><td>FEC_INTERACCION</td><td>Fecha/hora de la interacción</td></tr>
-          <tr><td>COD_CLIENTE</td><td>ID del cliente en el Banco</td></tr>
-          <tr><td>COD_PRODUCTO</td><td>Con el Producto que interactuo</td></tr>
-          <tr><td>COD_MONEDA</td><td>Moneda de la interacción</td></tr>
-          <tr><td>COD_INTERACCION</td><td>Identificador de la interacción</td></tr>
-          <tr><td>COD_TIPO_INTERACCION</td><td>Identificador del tipo de interacción</td></tr>
-          <tr><td>COD_ESTADO_INTERACCION</td><td>Identificador del estado de la interacción</td></tr>
-          <tr><td>COD_INFO_INTERACCION</td><td>Detalle</td></tr>
-          <tr><td>MONTO_INTERACCION</td><td>Monto de la interacción</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</section>
+    </section>
 
+    <!-- ===================== Dimensiones (galería) ===================== -->
     <section id="dim" class="card">
       <h2>Catálogo de Dimensiones (con imágenes)</h2>
       <div id="gallery" class="gallery"></div>
     </section>
 
+    <!-- ===================== Mapeo ===================== -->
     <section id="mapeo" class="card">
       <h2>Mapeo Hecho → Dimensiones</h2>
       <table>
@@ -152,39 +177,94 @@
     </section>
   </main>
 
-<script>
-// Montaje de galería de dimensiones (con descripciones breves)
-const DIM_IMAGES=[
-  {title:'DIM01_DimCliente',src:'img/dimensions/DIM01_DimCliente.png',desc:'Contiene los datos principales del cliente, segmento y atributos relevantes.'},
-  {title:'DIM02_DimProducto',src:'img/dimensions/DIM02_DimProducto.png',desc:'Describe los productos o servicios ofrecidos con los que el cliente interactúa.'},
-  {title:'DIM03_DimEstado Producto',src:'img/dimensions/DIM03_DimEstado_Producto.png',desc:'Registra los distintos estados de los productos asociados a la interacción.'},
-  {title:'DIM05_DimTipoProducto',src:'img/dimensions/DIM05_DimTipoProducto.png',desc:'Clasifica el tipo de producto, útil para agrupar por categoría o familia.'},
-  {title:'DIM06_DimMoneda',src:'img/dimensions/DIM06_DimMoneda.png',desc:'Normaliza las monedas empleadas en las transacciones o interacciones.'},
-  {title:'DIM07_DimCalendario',src:'img/dimensions/DIM07_DimCalendario.png',desc:'Proporciona contexto temporal: año, mes, semana y fechas clave.'},
-  {title:'DIM08_DimPromotor',src:'img/dimensions/DIM08_DimPromotor.png',desc:'Identifica al promotor o colaborador responsable de la interacción.'},
-  {title:'DIM11_DimTipoInteraccion',src:'img/dimensions/DIM11_DimTipoInteraccion.png',desc:'Define el tipo de interacción: llamada, chat, correo o visita.'}
-];
-function createTile({title,src,desc}){
-  const t=document.createElement('article');t.className='tile';
-  t.innerHTML=`<div class='imgwrap'><img alt='${title}' loading='lazy' src='${src}'></div><div class='body'><h3>${title}</h3><p class='small'>${desc}</p></div>`;
-  const i=t.querySelector('img');i.addEventListener('error',()=>{t.querySelector('.imgwrap').innerHTML="<div style='padding:40px;color:#5b6d64'>Imagen no encontrada</div>"});
-  return t;
-}
-(function(){
-  const g=document.getElementById('gallery');
-  if(g){
-    g.innerHTML='';
-    DIM_IMAGES.forEach(d=>g.appendChild(createTile(d)));
-  }
-  // Fallback para imagen del hecho
-  const factImg=document.querySelector('#fact-image img');
-  const fallback=document.getElementById('fact-fallback');
-  if(factImg){
-    factImg.addEventListener('error',()=>{ if(fallback) fallback.style.display='block'; });
-    factImg.addEventListener('load', ()=>{ if(fallback) fallback.style.display='none';  });
-    if(factImg.complete && factImg.naturalWidth>0){ if(fallback) fallback.style.display='none'; }
-  }
-})();
-</script>
+  <!-- ===================== Scripts con fallbacks ===================== -->
+  <script>
+    // Extensiones candidatas para fallback
+    const EXT_CANDIDATES = ['.png', '.PNG', '.jpg', '.JPG', '.jpeg'];
+
+    // Crea un <img> intentando múltiples extensiones hasta encontrar una válida
+    function createImgWithFallback(basePath, altText, onReady) {
+      let idx = 0;
+      const img = new Image();
+      img.alt = altText;
+      img.loading = 'lazy';
+
+      function tryNext() {
+        if (idx >= EXT_CANDIDATES.length) {
+          onReady(null); // no se encontró
+          return;
+        }
+        const attempt = basePath + EXT_CANDIDATES[idx++];
+        img.src = attempt;
+      }
+
+      img.addEventListener('error', () => {
+        // console.warn('No se encontró imagen, probando siguiente extensión:', img.src);
+        tryNext();
+      });
+
+      img.addEventListener('load', () => onReady(img));
+
+      tryNext();
+    }
+
+    // ===== Imagen del hecho (FCT) con fallback de extensiones =====
+    (function mountFactImage() {
+      const mount = document.getElementById('fact-img-mount');
+      const fallback = document.getElementById('fact-fallback');
+      if (!mount) return;
+
+      createImgWithFallback('img/fact/interacciones', 'FCT_Interacciones', (img) => {
+        if (img) {
+          mount.appendChild(img);
+          if (fallback) fallback.style.display = 'none';
+        } else {
+          if (fallback) fallback.style.display = 'block';
+        }
+      });
+    })();
+
+    // ===== Galería de dimensiones con basePath (sin extensión) =====
+    const DIM_IMAGES = [
+      { title:'DIM01_DimCliente',         base:'img/dimensions/DIM01_DimCliente',         desc:'Contiene los datos principales del cliente, segmento y atributos relevantes.' },
+      { title:'DIM02_DimProducto',        base:'img/dimensions/DIM02_DimProducto',        desc:'Describe los productos o servicios con los que el cliente interactúa.' },
+      { title:'DIM03_DimEstado Producto', base:'img/dimensions/DIM03_DimEstado_Producto', desc:'Registra los distintos estados de los productos asociados a la interacción.' },
+      { title:'DIM05_DimTipoProducto',    base:'img/dimensions/DIM05_DimTipoProducto',    desc:'Clasifica el tipo de producto, útil para agrupar por categoría o familia.' },
+      { title:'DIM06_DimMoneda',          base:'img/dimensions/DIM06_DimMoneda',          desc:'Normaliza las monedas empleadas en las transacciones o interacciones.' },
+      { title:'DIM07_DimCalendario',      base:'img/dimensions/DIM07_DimCalendario',      desc:'Proporciona contexto temporal: año, mes, semana y fechas clave.' },
+      { title:'DIM08_DimPromotor',        base:'img/dimensions/DIM08_DimPromotor',        desc:'Identifica al promotor o colaborador responsable de la interacción.' },
+      { title:'DIM11_DimTipoInteraccion', base:'img/dimensions/DIM11_DimTipoInteraccion', desc:'Define el tipo de interacción: llamada, chat, correo o visita.' }
+    ];
+
+    function createTile({title, base, desc}) {
+      const tile = document.createElement('article');
+      tile.className = 'tile';
+      tile.innerHTML = `
+        <div class="imgwrap"></div>
+        <div class="body">
+          <h3>${title}</h3>
+          <p class="small">${desc}</p>
+        </div>
+      `;
+      const wrap = tile.querySelector('.imgwrap');
+
+      createImgWithFallback(base, title, (img) => {
+        if (img) {
+          wrap.appendChild(img);
+        } else {
+          wrap.innerHTML = "<div style='padding:40px;color:#5b6d64'>Imagen no encontrada</div>";
+        }
+      });
+
+      return tile;
+    }
+
+    (function renderGallery(){
+      const g = document.getElementById('gallery');
+      if (!g) return;
+      g.innerHTML = '';
+      DIM_IMAGES.forEach(item => g.appendChild(createTile(item)));
+    })();
+  </script>
 </body>
 </html>
